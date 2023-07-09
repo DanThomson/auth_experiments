@@ -1,7 +1,7 @@
 FROM python:3-alpine AS builder
 
 # upgrade pip
-RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --upgrade pip
 
 # permissions and nonroot user for tightened security
 RUN adduser -D nonroot
@@ -22,7 +22,7 @@ ENV VIRTUAL_ENV=/app/venv
 # python setup
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # define the port number the container should expose
 EXPOSE 4430

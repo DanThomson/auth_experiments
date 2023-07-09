@@ -3,11 +3,12 @@ import os
 import flask
 import flask_login
 import requests
-import werkzeug
+import werkzeug.middleware.proxy_fix
 
+import db
 import google
+import user
 
-from user import User
 
 # Localize needed environment variables
 port_num = os.environ.get('FLASK_SERVER_PORT', 9090)
@@ -25,10 +26,16 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 
+try:
+    db.init_db_command()
+except db.OperationalError:
+    pass  # Database already initialized
+
+
 # Flask-Login helper to retrieve a user from our db
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return user.User.get(user_id)
 
 
 @app.route('/')
@@ -63,9 +70,8 @@ def callback():
         user = google.receive_user(code)
     except google.NoVerifiedEmail as exc:
         return str(exc), 400
-    else:
-        flask_login.login_user(user)
 
+    flask_login.login_user(user)
     return flask.redirect(flask.url_for('index'))
 
 
@@ -84,5 +90,4 @@ if __name__=='__main__':
     app.run(
         host='0.0.0.0',
         port=port_num,
-        # debug=True,
     )

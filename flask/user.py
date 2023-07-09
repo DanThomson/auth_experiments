@@ -10,13 +10,13 @@ class User(UserMixin):
         self.email = email
         self.profile_pic = profile_pic
 
-        # Create db entry for users that do not have a database entry
-        if not self.get(id_):
+        # # Create db entry for users that do not have a database entry
+        if not db.get_user(id_):
             self.create(id_, name, email, profile_pic)
 
     @staticmethod
-    def get(user_id):
-        user_attributes = db.get_user()
+    def get(id_):
+        user_attributes = db.get_user(id_)
         if not user_attributes:
             return None
         return User(*user_attributes)

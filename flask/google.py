@@ -2,7 +2,7 @@ import json
 import os
 
 import flask
-import oauthlib
+import oauthlib.oauth2
 import requests
 
 from user import User

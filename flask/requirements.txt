@@ -3,4 +3,3 @@ Flask
 oauthlib
 pyOpenSSL
 Flask-Login
-#uwsgi
