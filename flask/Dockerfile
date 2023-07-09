@@ -13,19 +13,17 @@ RUN chown -R nonroot:nonroot /var/log/flask-app
 WORKDIR /app
 USER nonroot
 
-# copy all the files to the container
-COPY --chown=nonroot:nonroot . .
-
 # venv
 ENV VIRTUAL_ENV=/app/venv
 
 # python setup
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+COPY --chown=nonroot:nonroot requirements.txt .
 RUN pip install -r requirements.txt
 
-# define the port number the container should expose
-EXPOSE 4430
+# copy all the files to the container
+COPY --chown=nonroot:nonroot . .
 
 
 CMD ["python", "app.py"]
