@@ -18,6 +18,9 @@ secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
 # Create our Flask
 app = flask.Flask(__name__)
 app.secret_key = secret_key
+app.wsgi_app = werkzeug.middleware.proxy_fix.ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 
 # User session management setup
@@ -80,14 +83,3 @@ def callback():
 def logout():
     flask_login.logout_user()
     return flask.redirect(flask.url_for('index'))
-
-
-if __name__=='__main__':
-    app.wsgi_app = werkzeug.middleware.proxy_fix.ProxyFix(
-        app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
-    )
-
-    app.run(
-        host='0.0.0.0',
-        port=port_num,
-    )

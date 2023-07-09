@@ -15,7 +15,7 @@ services:
 
   backend:
     build:
-      context: flask
+      context: flask_auth
       target: copy_code
     stop_signal: SIGINT
     environment:

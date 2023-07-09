@@ -3,4 +3,5 @@ keys
 kruft
 nginx/dhparam.pem
 env_file
-flask/sqlite.db
+flask_auth/sqlite.db
+__pycache__
