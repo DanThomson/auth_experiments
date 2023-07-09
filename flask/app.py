@@ -11,7 +11,7 @@ import user
 
 
 # Localize needed environment variables
-port_num = os.environ.get('FLASK_SERVER_PORT', 9090)
+port_num = os.environ.get('FLASK_SERVER_PORT', 9091)
 secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
 
 
@@ -60,7 +60,7 @@ def index():
 
 @app.route('/login')
 def login():
-    return flask.redirect(google.login())
+    return flask.redirect(google.get_login_uri())
 
 
 @app.route('/login/callback')

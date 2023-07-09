@@ -32,7 +32,7 @@ provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
 client = oauthlib.oauth2.WebApplicationClient(GOOGLE_CLIENT_ID)
 
 
-def login():
+def get_login_uri():
     authorization_endpoint = provider_cfg['authorization_endpoint']
     request_uri = client.prepare_request_uri(
         authorization_endpoint,

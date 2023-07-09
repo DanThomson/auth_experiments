@@ -10,7 +10,7 @@ class User(UserMixin):
         self.email = email
         self.profile_pic = profile_pic
 
-        # # Create db entry for users that do not have a database entry
+        # Create db entry for users that do not have a database entry
         if not db.get_user(id_):
             self.create(id_, name, email, profile_pic)
 

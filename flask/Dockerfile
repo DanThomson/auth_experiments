@@ -22,8 +22,8 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --chown=nonroot:nonroot requirements.txt .
 RUN pip install -r requirements.txt
 
+FROM builder AS copy_code
 # copy all the files to the container
 COPY --chown=nonroot:nonroot . .
-
 
 CMD ["python", "app.py"]
