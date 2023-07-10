@@ -16,7 +16,7 @@ services:
   backend:
     build:
       context: flask_auth
-      target: copy_code
+      target: run
     stop_signal: SIGINT
     environment:
       - FLASK_SERVER_PORT=9091

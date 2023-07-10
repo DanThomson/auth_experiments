@@ -22,12 +22,13 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --chown=nonroot:nonroot requirements.txt .
 RUN pip install -r requirements.txt
 
+
 FROM builder AS copy_code
 # copy all the files to the container
 COPY --chown=nonroot:nonroot . .
 
 
+FROM copy_code AS run
 WORKDIR /appdir
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-# CMD ["python", "app.py"]
 CMD ["gunicorn"]
